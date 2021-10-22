@@ -5,69 +5,112 @@
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- This is used to add bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- This is our own styles and javascript folders -->
   <link rel="stylesheet" href="styles.css">
+  <script src="scripts.js"></script>
+  <!-- This is used to add bootstrap -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- This is used to add boostrap - font awesome icons -->
+  <script src="https://kit.fontawesome.com/255f3d09d1.js" crossorigin="anonymous"></script>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 </head>
-<form>
-  <!-- CHAD - Insert Form Here -->
-</form>
+  
 <body>
+  <nav class="navbar fixed-top navbar-dark bg-info">
+    <span class="navbar-brand mb-0 h1">
+      <!-- This is the money icon -->
+      <i class="fas fa-money-bill-wave"></i>
+      <!-- Title -->
+      Student Expense Tracker
+    </span>
+  </nav>
   <table class="table table-striped">
     <thead class="thead-dark">
+      <!-- This is the Top of the table. Includes Date, Description, Category, and Amount -->
       <tr>
-        <th scope="col">Date</th>
+        <th scope="col"> Date</th>
         <th scope="col">Description</th>
         <th scope="col">Category</th>
         <th scope="col">Amount</th>
       </tr>
     </thead>
     <tbody>
+      <!-- This is the body of the table. It starts with a Form to add an expense row. -->
       <tr>
-        <th scope="row">10/20/21</th>
+        <th scope="row">
+          <!-- Input Checkbox and Inputs for date, desc, categ, and amount. -->
+          <!-- CHAD - Insert/Edit Form Here -->  
+          <!-- So far it is a basic input within the table itself. -->
+          <input type="checkbox"> 
+          <input type="date" placeholder="Date">
+        </th>
+        <td>
+          <input type="text" placeholder="Description">
+        </td>
+        <td>
+          <input type="text" placeholder="Category">
+        </td>
+        <td>
+          <input type="text" placeholder="$">
+        </td>
+      </tr>
+      <tr> 
+        <!-- Random Expense Info for basic outline/prototype of Tracker --> 
+        <th scope="row">
+          <input type="checkbox"> 10/20/21</th>
         <td>Broulims</td>
         <td>Groceries</td>
         <td>$24.56</td>
       </tr>
       <tr>
-        <th scope="row">10/18/21</th>
+        <th scope="row">
+          <input type="checkbox"> 10/18/21</th>
         <td>Brigham Young University - Idaho</td>
         <td>School Supplies</td>
         <td>$11.00</td>
       </tr>
       <tr>
-        <th scope="row">10/16/21</th>
+        <th scope="row">
+          <input type="checkbox"> 10/16/21</th>
         <td>Adam's Mongolian Grill</td>
         <td>Restaurants</td>
         <td>$34.56</td>
       </tr>
       <tr>
-        <th scope="row">10/13/21</th>
+        <th scope="row">
+          <input type="checkbox"> 10/13/21</th>
         <td>Amazon</td>
         <td>Shopping</td>
         <td>$13.74</td>
       </tr>
       <tr>
-        <th scope="row">10/12/21</th>
+        <th scope="row">
+          <input type="checkbox"> 10/12/21</th>
         <td>Costco</td>
         <td>Gas & Fuel</td>
         <td>$66.12</td>
       </tr>
       <tr>
-        <th scope="row">10/09/21</th>
+        <th scope="row">
+          <input type="checkbox"> 10/09/21</th>
         <td>Walmart</td>
         <td>Groceries</td>
         <td>$30.56</td>
       </tr>
       <tr>
-        <th scope="row">10/03/21</th>
+        <th scope="row">
+          <input type="checkbox"> 10/03/21</th>
         <td>Autozone</td>
         <td>Car Maint.</td>
         <td>$45.72</td>
       </tr>
       <tr>
-        <th scope="row">10/01/21</th>
+        <th scope="row">
+          <input type="checkbox"> 10/01/21</th>
         <td>Chik-fil-A</td>
         <td>Restaurants</td>
         <td>$14.33</td>
@@ -75,6 +118,5 @@
     </tbody>
   </table>
 
-  <script src="scripts.js"></script>
 </body>
 </html>
