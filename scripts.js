@@ -10,11 +10,19 @@ const add_item_form = document.querySelector('#add-item-form');
 
 const btn_add_item = document.querySelector('#add-item');
 
+const VALID_CATEGORIES = [
+  "mortgage", "charity", "tuition", "groceries", "gas", "shopping", "fast_food", "income"
+]
+
+const VALID_TENDER = [
+  "cash", "check", "credit"
+]
+
 window.onload = () => {
   //render all items
   renderAllItems();
 
-  add_item_form.addEventListener("submit", function(event) {
+  add_item_form.addEventListener("submit", function (event) {
     event.preventDefault();
     let data = new FormData(add_item_form);
     let item = {
@@ -31,6 +39,7 @@ window.onload = () => {
 
 };
 
+
 /**
  * create and store an item into local storage
  */
@@ -39,6 +48,7 @@ function addItem(item) {
 
   localStorage.setItem(key, JSON.stringify(item));
 }
+
 
 /**
  * render every item in localStorage into table
@@ -53,12 +63,63 @@ function renderAllItems() {
 
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (key != 'counter') {
-      const value = JSON.parse(localStorage.getItem(key));
+    const value = JSON.parse(localStorage.getItem(key));
+    renderItem(key, value);
+  }
+}
+
+
+/**
+ * render items to table by specified date
+ * @param {string} date "yyyy/mm/dd"
+ */
+function renderItemsByDate(date) {
+  //clear the table
+  tbody.innerHTML = '';
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = JSON.parse(localStorage.getItem(key));
+    if (date == value.completed) {
       renderItem(key, value);
     }
   }
 }
+
+
+/**
+ * 
+ * @returns [] obj
+ */
+function getItemsByCategory() {
+  let items = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = JSON.parse(localStorage.getItem(key));
+    if (category == value.category) {
+      items.push({key, value});
+    }
+  }
+
+  return items;
+}
+
+
+/**
+ * render items to table by given category
+ * @param {string} category 
+ */
+function renderItemsByCategory(category) {
+  //clear the table
+  tbody.innerHTML = '';
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = JSON.parse(localStorage.getItem(key));
+    if (category == value.category) {
+      renderItem(key, value);
+    }
+  }
+}
+
 
 /**
  * render a single item and append to table
