@@ -10,7 +10,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <!-- This is our own styles and javascript folders -->
   <link rel="stylesheet" href="styles.css">
-  
+  <!--Load the AJAX API (for Google Charts)-->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <!-- This is used to add bootstrap -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -22,7 +23,7 @@
 </head>
 
 <body>
-  <nav class="navbar fixed-top navbar-dark bg-info">
+  <nav class="navbar fixed-top navbar-dark bg-primary">
     <span class="navbar-brand mb-0 h1">
       <!-- This is the money icon -->
       <i class="fas fa-money-bill-wave"></i>
@@ -31,77 +32,128 @@
     </span>
   </nav>
 
-  <form action="#" id="add-item-form">
-    <div class="form-row">
-      <div class="form-group col-md-2">
-        <label for="">Date</label>
-        <input class=" form-control" type="date" name="date" id="date">
+  <!-- Megan: Added a card holder for grid template -->
+  <div class="row">
+    <div class="col-sm-1">
+      <div class="card">
+        <div class="card-body">
+        </div>
       </div>
-
-      <div class="col form-group col-md-2">
-        <label for="">Description</label>
-        <input class="form-control" type="text" name="description" id="description">
-      </div>
-
-      <div class="form-group col-md-2">
-        <label for="">Category</label>
-        <select class="form-control" name="category" id="category">
-          <option value="mortgage">Mortgage & Rent</option>
-          <option value="charity">Charity</option>
-          <option value="tuition">Tutition</option>
-          <option value="groceries">Groceries</option>
-          <option value="gas">Gas & Fuel</option>
-          <option value="shopping">Shopping</option>
-          <option value="fast_food">Fast Food</option>
-          <option value="income">Income</option>
-        </select>
-      </div>
-
-      <div class="form-group col-md-2">
-        <label for="">Amount</label>
-        <input class="form-control" type="text" name='amount' id="amount">
-      </div>
-    </div> <!-- /.row -->
-
-    <div class="form-row">
-      <div class="form-group col-md-2">
-        <label for="">Type</label>
-        <select class="form-control" name="tender" id="tender">
-          <option value="cash">Cash</option>
-          <option value="check">Check</option>
-          <option value="pending">Pending</option>
-        </select>
-      </div>
-
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="type" id="radio-expense" value="expense">
-        <label class="form-check-label" for="radio-expense">Expense</label>
-      </div>
-      <div class='form-check form-check-inline'>
-        <input class="form-check-input" type="radio" name="type" id="radio-income" value="income">
-        <label class="form-check-label" for="radio-income">Income</label>
-      </div>
-    </div> <!-- /.form-row -->
-
-    <div class="form-row">
-      <button type='submit' id="add-item">Add Item</button>
     </div>
-  </form>
+    <div class="col-sm-11">
+      <div class="card">
+        <div class="card-body">
+        <form action="#" id="add-item-form">
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <label for="">Date</label>
+              <input class=" form-control" type="date" name="date" id="date">
+            </div>
 
-  <table class="table table-striped">
-    <thead class="thead-dark">
-      <!-- This is the Top of the table. Includes Date, Description, Category, and Amount -->
-      <tr>
-        <th scope="col"> Date</th>
-        <th scope="col">Description</th>
-        <th scope="col">Category</th>
-        <th scope="col">Amount</th>
-      </tr>
-    </thead>
-    <tbody id="tbody">
-      
-    </tbody>
-  </table>
+            <div class="col form-group col-md-2">
+              <label for="">Description</label>
+              <input class="form-control" type="text" name="description" id="description">
+            </div>
+
+            <div class="form-group col-md-2">
+              <label for="">Category</label>
+              <select class="form-control" name="category" id="category">
+                <option value="mortgage">Mortgage & Rent</option>
+                <option value="charity">Charity</option>
+                <option value="tuition">Tutition</option>
+                <option value="groceries">Groceries</option>
+                <option value="gas">Gas & Fuel</option>
+                <option value="shopping">Shopping</option>
+                <option value="fast_food">Fast Food</option>
+                <option value="income">Income</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-2 ">
+              <label for="">Amount</label>
+              <input class="form-control" type="text" name='amount' id="amount">
+            </div>
+          </div> <!-- /.row -->
+
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <label for="">Type</label>
+              <select class="form-control" name="tender" id="tender">
+                <option value="cash">Cash</option>
+                <option value="check">Check</option>
+                <option value="pending">Pending</option>
+              </select>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="type" id="radio-expense" value="expense">
+              <label class="form-check-label" for="radio-expense">Expense</label>
+            </div>
+            <div class='form-check form-check-inline'>
+              <input class="form-check-input" type="radio" name="type" id="radio-income" value="income">
+              <label class="form-check-label" for="radio-income">Income</label>
+            </div>
+          </div> <!-- /.form-row -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Added a card holder for the Add item button. -->
+    <div class="row">
+      <div class="col-sm-1">
+        <div class="card">
+          <div class="card-body">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <div class="card">
+          <div class="card-body">
+            <div class="form-row">
+              <button class= "btn btn-primary" type='submit' id="add-item">Add Item</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+  <div class="row">
+    <div class="col-sm-1">
+      <div class="card">
+        <div class="card-body">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <!-- This is the Top of the table. Includes Date, Description, Category, and Amount -->
+              <tr>
+                <th scope="col"> Date</th>
+                <th scope="col">Description</th>
+                <th scope="col">Category</th>
+                <th scope="col">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="card">
+        <div class="card-body">
+          <div id="chart_div"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <script src="scripts.js"></script>
 </body>
