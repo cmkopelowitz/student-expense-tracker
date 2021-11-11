@@ -1,161 +1,156 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- This is used to add bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <!-- This is our own styles and javascript folders -->
-  <link rel="stylesheet" href="styles.css">
-  <!--Load the AJAX API (for Google Charts)-->
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <!-- This is used to add bootstrap -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <!-- This is used to add boostrap - font awesome icons -->
-  <script src="https://kit.fontawesome.com/255f3d09d1.js" crossorigin="anonymous"></script>
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css"
-    rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-</head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<body>
-  <nav class="navbar fixed-top navbar-dark bg-primary">
-    <span class="navbar-brand mb-0 h1">
-      <!-- This is the money icon -->
-      <i class="fas fa-money-bill-wave"></i>
-      <!-- Title -->
-      Student Expense Tracker!
-    </span>
-  </nav>
-
-  <!-- Megan: Added a card holder for grid template -->
-  <div class="row">
-    <div class="col-sm-1">
-      <div class="card">
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="card text-white bg-success">
         <div class="card-body">
+            <h5 class="card-title text-center font-weight-bold">Student Expense Tracker</h5>
         </div>
-      </div>
     </div>
-    <div class="col-sm-11">
-      <div class="card">
+    <div class="card ">
         <div class="card-body">
-        <form action="#" id="add-item-form">
-          <div class="form-row">
-            <div class="form-group col-md-2">
-              <label for="">Date</label>
-              <input class=" form-control" type="date" name="date" id="date">
-            </div>
-
-            <div class="col form-group col-md-2">
-              <label for="">Description</label>
-              <input class="form-control" type="text" name="description" id="description">
-            </div>
-
-            <div class="form-group col-md-2">
-              <label for="">Category</label>
-              <select class="form-control" name="category" id="category">
-                <option value="mortgage">Mortgage & Rent</option>
-                <option value="charity">Charity</option>
-                <option value="tuition">Tutition</option>
-                <option value="groceries">Groceries</option>
-                <option value="gas">Gas & Fuel</option>
-                <option value="shopping">Shopping</option>
-                <option value="fast_food">Fast Food</option>
-                <option value="income">Income</option>
-              </select>
-            </div>
-
-            <div class="form-group col-md-2 ">
-              <label for="">Amount</label>
-              <input class="form-control" type="text" name='amount' id="amount">
-            </div>
-          </div> <!-- /.row -->
-
-          <div class="form-row">
-            <div class="form-group col-md-2">
-              <label for="">Type</label>
-              <select class="form-control" name="tender" id="tender">
-                <option value="cash">Cash</option>
-                <option value="check">Check</option>
-                <option value="pending">Pending</option>
-              </select>
-            </div>
-
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="type" id="radio-expense" value="expense">
-              <label class="form-check-label" for="radio-expense">Expense</label>
-            </div>
-            <div class='form-check form-check-inline'>
-              <input class="form-check-input" type="radio" name="type" id="radio-income" value="income">
-              <label class="form-check-label" for="radio-income">Income</label>
-            </div>
-          </div> <!-- /.form-row -->
+            <form>
+                <div class="row">
+                  <div class="col">
+                    <input type="date" class="form-control" placeholder="MM / DD / YYYY" id="date">
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" placeholder="Description" id="description">
+                  </div>
+                  <div class="col">
+                    <select class="form-control" id="category">
+                        <option value=" ">Category</option>
+                        <option value="mortgage">Mortgage & Rent</option>
+                        <option value="charity">Charity</option>
+                        <option value="tuition">Tutition</option>
+                        <option value="groceries">Groceries</option>
+                        <option value="gas">Gas & Fuel</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="fast_food">Fast Food</option>
+                        <option value="income">Income</option>
+                        <option value="date_night">Date Night</option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" placeholder="$ Amount" id="amount">
+                  </div>
+                  <div class="col">
+                    <select class="form-control" name="tender" id="tender">
+                        <option value="type">Payment Type</option>
+                        <option value="cash">Cash</option>
+                        <option value="check">Check</option>
+                        <option value="credit_card">Credit Card</option>
+                        <option value="debit_card">Debit Card</option>
+                        <option value="pending">Pending</option>
+                      </select>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" id="radio-expense" >
+                      <label class="form-check-label" >
+                          Income
+                      </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="radio-income" >
+                        <label class="form-check-label" >
+                            Expense
+                        </label>
+                    </div>
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-success" id="add-item">Add Item</button>
+                    </div>
+                </div>
+              </form>
         </div>
-      </div>
     </div>
-
-    <!-- Added a card holder for the Add item button. -->
     <div class="row">
-      <div class="col-sm-1">
-        <div class="card">
-          <div class="card-body">
+        <div class="col-sm-8">
+          <div class="card">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                    <!-- This is the Top of the table. Includes Date, Description, Category, and Amount -->
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Income/Expense</th>
+                        <th scope="col">Edit/Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+                </table>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-sm-1">
-        <div class="card">
-          <div class="card-body">
-            <div class="form-row">
-              <button class= "btn btn-primary" type='submit' id="add-item">Add Item</button>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body">
+              <div id="piechart" style="width: 500px; height: 300px;"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-  </form>
-  <div class="row">
-    <div class="col-sm-1">
-      <div class="card">
-        <div class="card-body">
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-body">
-          <table class="table table-striped">
-            <thead class="thead-dark">
-              <!-- This is the Top of the table. Includes Date, Description, Category, and Amount -->
-              <tr>
-                <th scope="col"> Date</th>
-                <th scope="col">Description</th>
-                <th scope="col">Category</th>
-                <th scope="col">Amount</th>
-              </tr>
-            </thead>
-            <tbody id="tbody">
-              
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-5">
-      <div class="card">
-        <div class="card-body">
-          <div id="chart_div"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+    
+    
+    
 
 
-  <script src="scripts.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/8257765c7d.js" crossorigin="anonymous"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- This is our local scripts -->
+    <script src="scripts.js"></script>
+    <script src="chart.js"></script>
+    <script src="toggle.js"></script>
+
+    <!--Load the AJAX API (for Google Charts)-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Mortgage', 3],
+          ['Groceries', 1],
+          ['Gas', 1],
+          ['Tuition', 1],
+          ['Tithing', 2]
+        ]);
+
+        var options = {
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+    
+    
 </body>
-
 </html>
