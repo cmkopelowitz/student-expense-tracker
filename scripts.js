@@ -12,11 +12,11 @@ const btn_add_item = document.querySelector('#add-item');
 const btn_delete_item = document.querySelector('#delete-item');
 
 const VALID_CATEGORIES = [
-  "mortgage", "charity", "tuition", "groceries", "gas", "shopping", "fast_food", "income"
+  "mortgage", "charity", "tuition", "groceries", "gas", "shopping", "fast_food", "income", "date_night"
 ]
 
 const VALID_TENDER = [
-  "cash", "check", "credit"
+  "cash", "check", "credit_card", "debit_card", "pending"
 ]
 
 window.onload = () => {
@@ -163,75 +163,21 @@ function renderItem(key, value) {
   <td>${value.description}</td>
   <td>${value.category}</td>
   <td>${value.amount}</td>
-  <td><a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen"></i></a></td>
-  <td><a class="delete" title="Delete" data-toggle="tooltip"><i class="fas fa-trash"></i></a></td>
-  `;
+  <td>${value.type}</td>
+  <td>${value.tender}</td>
+  <td><a class="add visible" title="Add" data-toggle="tooltip"><i class="fas fa-list"></i></a>
+  <a class="edit" title="Edit" data-toggle="tooltip"><i onclick="toggleAddEdit(this)" class="fas fa-pencil-alt"></i></i></a>
+  <a class="delete" title="Delete" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></a>
+  </td>`;
 
   tbody.append(tr);
 }
 
-/**
- * Google Chart - Megan
- */
-// Load the Visualization API and the corechart package.
-google.charts.load('current', {'packages':['corechart']});
 
-// Set a callback to run when the Google Visualization API is loaded.
-google.charts.setOnLoadCallback(drawChart);
+function toggleAddEdit(x) {
+  x.classList.toggle("fa-list");
+}
 
-// Callback that creates and populates a data table,
-// instantiates the pie chart, passes in the data and
-// draws it.
-function drawChart() {
-
-  // Create the data table.
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Topping');
-  data.addColumn('number', 'Slices');
-  data.addRows([
-    ['Mortgage', 3],
-    ['Groceries', 1],
-    ['Gas', 1],
-    ['Tuition', 1],
-    ['Tithing', 2]
-  ]);
-
-  // Set chart options
-  var options = {'title':'Trending Expenses',
-                 'width':400,
-                 'height':300};
-
-  // Instantiate and draw our chart, passing in some options.
-  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-  chart.draw(data, options);
-
-  // End of Google Chart
-
-
-  /**
- * Added an toggle add/edit item - Megan
- */
-// $(document).ready(function(){
-// 	$('[data-toggle="tooltip"]').tooltip();
-// 	var actions = $("table td:last-child").html();
-// 	// Append table with add row form on add new button click
-//     $(".add-new").click(function(){
-// 		$(this).attr("disabled", "disabled");
-// 		var index = $("table tbody tr:last-child").index();
-//         var row = '<tr>' +
-//             '<td><input type="text" class="form-control" name="name" id="name"></td>' +
-//             '<td><input type="text" class="form-control" name="department" id="department"></td>' +
-//             '<td><input type="text" class="form-control" name="phone" id="phone"></td>' +
-// 			'<td>' + actions + '</td>' +
-//         '</tr>';
-//     	$("table").append(row);		
-// 		$("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
-//         $('[data-toggle="tooltip"]').tooltip();
-
-
-/**
- * Added an edit item - Megan
- */
 // Edit row on edit button click
 $(document).on("click", ".edit", function(){		
   $(this).parents("tr").find("td:not(:last-child)").each(function(){
@@ -241,15 +187,58 @@ $(this).parents("tr").find(".add, .edit").toggle();
 $(".add-new").attr("disabled", "disabled");
 });
 
-/**
- * Added a delete item - Megan
- */
+// Add row on add button click
+$(document).on("click", ".add", function(){
+  var empty = false;
+  var input = $(this).parents("tr").find('input[type="text"]');
+      input.each(function(){
+    if(!$(this).val()){
+      $(this).addClass("error");
+      empty = true;
+    } else{
+              $(this).removeClass("error");
+          }
+  });
+  $(this).parents("tr").find(".error").first().focus();
+  if(!empty){
+    input.each(function(){
+      $(this).parent("td").html($(this).val());
+    });			
+    // $(this).parents("tr").find(".add, .edit").toggle();
+    // $(".add-new").removeAttr("disabled");
+  }		
+});
+
 // Delete row on delete button click
 $(document).on("click", ".delete", function(){
   $(this).parents("tr").remove();
-  localStorage.removeItem("click");
 $(".add-new").removeAttr("disabled");
-
 });
 
+// Google Charts - Megan
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+
+  var data = google.visualization.arrayToDataTable([
+    ['Task', 'Hours per Day'],
+    ['Mortgage', 3],
+    ['Groceries', 1],
+    ['Gas', 1],
+    ['Tuition', 1],
+    ['Tithing', 2]
+  ]);
+
+  var options = {
+    title: 'My Daily Activities'
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+  chart.draw(data, options);
 }
+
+
+
+
