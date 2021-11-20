@@ -55,26 +55,26 @@ function addItem(item) {
  * Added a "add after edit" item - Megan
  */
 // Add row on add button click
-$(document).on("click", ".add", function(){
+$(document).on("click", ".add", function () {
   var empty = false;
   var input = $(this).parents("tr").find('input[type="text"]');
-      input.each(function(){
-    if(!$(this).val()){
+  input.each(function () {
+    if (!$(this).val()) {
       $(this).addClass("error");
       empty = true;
-    } else{
-              $(this).removeClass("error");
-          }
+    } else {
+      $(this).removeClass("error");
+    }
   });
   $(this).parents("tr").find(".error").first().focus();
-  if(!empty){
-    input.each(function(){
+  if (!empty) {
+    input.each(function () {
       $(this).parent("td").html($(this).val());
-    });			
+    });
     $(this).parents("tr").find(".add, .edit").toggle();
     $(".add-new").removeAttr("disabled");
-  }		
-  });
+  }
+});
 
 
 /**
@@ -123,7 +123,7 @@ function getItemsByCategory() {
     const key = localStorage.key(i);
     const value = JSON.parse(localStorage.getItem(key));
     if (category == value.category) {
-      items.push({key, value});
+      items.push({ key, value });
     }
   }
 
@@ -179,44 +179,65 @@ function toggleAddEdit(x) {
 }
 
 // Edit row on edit button click
-$(document).on("click", ".edit", function(){		
-  $(this).parents("tr").find("td:not(:last-child)").each(function(){
-$(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
-});		
-$(this).parents("tr").find(".add, .edit").toggle();
-$(".add-new").attr("disabled", "disabled");
+$(document).on("click", ".edit", function () {
+  $(this).parents("tr").find("td:not(:last-child)").each(function () {
+    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+  });
+  $(this).parents("tr").find(".add, .edit").toggle();
+  $(".add-new").attr("disabled", "disabled");
 });
 
 // Add row on add button click
-$(document).on("click", ".add", function(){
+$(document).on("click", ".add", function () {
   var empty = false;
   var input = $(this).parents("tr").find('input[type="text"]');
-      input.each(function(){
-    if(!$(this).val()){
+  input.each(function () {
+    if (!$(this).val()) {
       $(this).addClass("error");
       empty = true;
-    } else{
-              $(this).removeClass("error");
-          }
+    } else {
+      $(this).removeClass("error");
+    }
   });
   $(this).parents("tr").find(".error").first().focus();
-  if(!empty){
-    input.each(function(){
+  if (!empty) {
+    input.each(function () {
       $(this).parent("td").html($(this).val());
-    });			
+    });
     // $(this).parents("tr").find(".add, .edit").toggle();
     // $(".add-new").removeAttr("disabled");
-  }		
+  }
 });
 
 // Delete row on delete button click
-$(document).on("click", ".delete", function(){
+$(document).on("click", ".delete", function () {
   $(this).parents("tr").remove();
-$(".add-new").removeAttr("disabled");
+  $(".add-new").removeAttr("disabled");
 });
 
+function getSpendingByCategory() {
+  if (localStorage.length === 0) {
+    console.log('storage is empty!');
+  }
+
+  let categoryToExpense = new Map();
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = JSON.parse(localStorage.getItem(key));
+    console.log(typeof value.amount)
+    if (categoryToExpense.has(value.category)) {
+      categoryToExpense.set(value.category, categoryToExpense.get(value.category) + Number(value.amount));
+    } else {
+      categoryToExpense.set(value.category, Number(value.amount));
+    }
+  }
+
+  return Array.from(categoryToExpense);
+}
+
+
 // Google Charts - Megan
-google.charts.load('current', {'packages':['corechart']});
+google.charts.load('current', { 'packages': ['corechart'] });
 google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {

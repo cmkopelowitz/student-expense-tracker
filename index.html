@@ -21,16 +21,16 @@
 
   <div class="card ">
     <div class="card-body">
-      <form>
+      <form id="add-item-form">
         <div class="row">
           <div class="col">
-            <input type="date" class="form-control" placeholder="MM / DD / YYYY" id="date">
+            <input name="date" type="date" class="form-control" placeholder="MM / DD / YYYY" id="date">
           </div>
           <div class="col">
-            <input type="text" class="form-control" placeholder="Description" id="description">
+            <input name="description" type="text" class="form-control" placeholder="Description" id="description">
           </div>
           <div class="col">
-            <select class="form-control" id="category">
+            <select name="category" class="form-control" id="category">
               <option value=" ">Category</option>
               <option value="mortgage">Mortgage & Rent</option>
               <option value="charity">Charity</option>
@@ -44,7 +44,7 @@
             </select>
           </div>
           <div class="col">
-            <input type="text" class="form-control" placeholder="$ Amount" id="amount">
+            <input name="amount"  type="text" class="form-control" placeholder="$ Amount" id="amount">
           </div>
           <div class="col">
             <select class="form-control" name="tender" id="tender">
@@ -58,13 +58,13 @@
           </div>
           <div class="col">
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="radio-expense">
+              <input name="type" value="expense" class="form-check-input" type="radio" id="radio-expense">
               <label class="form-check-label">
                 Income
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="radio-income">
+              <input name="type" value="income"  class="form-check-input" type="radio" id="radio-income">
               <label class="form-check-label">
                 Expense
               </label>
