@@ -7,9 +7,16 @@ const inp_tender = document.querySelector("#tender");
 const inp_type = document.querySelector('#type');
 const tbody = document.querySelector('#tbody');
 const add_item_form = document.querySelector('#add-item-form');
+const budget_form = document.getElementById("budget-form");
 
 const btn_add_item = document.querySelector('#add-item');
 const btn_delete_item = document.querySelector('#delete-item');
+
+
+budget_form.addEventListener("click", (e) => {
+  location.replace("http://127.0.0.1:5500/budget.html");
+})
+
 
 const VALID_CATEGORIES = [
   "mortgage", "charity", "tuition", "groceries", "gas", "shopping", "fast_food", "income", "date_night"
