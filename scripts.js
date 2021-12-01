@@ -1,34 +1,41 @@
-//Add Item form inputs
-const inp_date = document.querySelector("#date");
-const inp_description = document.querySelector("#description");
-const inp_category = document.querySelector("#category");
-const inp_amount = document.querySelectorAll("#amount");
-const inp_tender = document.querySelector("#tender");
-const inp_type = document.querySelector('#type');
-const tbody = document.querySelector('#tbody');
+/********************************* CONSTANTS **********************************/
+const inp_date = $("#date");
+const inp_description = $("#description");
+const inp_category = $("#category");
+const inp_amount = $("#amount");
+const inp_tender = $("#tender");
+const inp_type = $('#type');
+const tbody = $('#tbody');
 const add_item_form = document.querySelector('#add-item-form');
-const budget_form = document.getElementById("budget-form");
+const budget_form = $("budget-form");
 
-const btn_add_item = document.querySelector('#add-item');
-const btn_delete_item = document.querySelector('#delete-item');
+const btn_add_item = $('#add-item');
+const btn_delete_item = $('#delete-item');
 
+const DEFAULT_CATEGORIES = [
+  "Income", "Mortgage & Rent", "Charity", "Tuition", "Groceries", "Gas & Travel", "Shopping", "Fast Food", "Date Night"
+];
 
-budget_form.addEventListener("click", (e) => {
-  location.replace("http://127.0.0.1:5500/budget.html");
-})
-
-
-const VALID_CATEGORIES = [
-  "mortgage", "charity", "tuition", "groceries", "gas", "shopping", "fast_food", "income", "date_night"
-]
+const getDefaultBudget = () => {
+  let budgetMap = new Map();
+  DEFAULT_CATEGORIES.forEach( (category) => {
+    budgetMap.set(category, "None")
+  })
+  return JSON.stringify(Object.fromEntries(budgetMap));
+}
 
 const VALID_TENDER = [
   "cash", "check", "credit_card", "debit_card", "pending"
 ]
 
-window.onload = () => {
-  //render all items
-  renderAllItems();
+/******************************************************************************/
+
+
+$(document).ready(function () {
+  /****************************** EVENT LISTENERS ******************************/
+  budget_form.click((e) => {
+    location.replace("http://127.0.0.1:5500/budget.html");
+  });
 
   add_item_form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -45,43 +52,81 @@ window.onload = () => {
     addItem(item);
   });
 
-};
+
+  // Edit row on edit button click
+  $(document).on("click", ".edit", function () {
+    $(this).parents("tr").find("td:not(:last-child)").each(function () {
+      $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+    });
+    $(this).parents("tr").find(".add, .edit").toggle();
+    $(".add-new").attr("disabled", "disabled");
+  });
+
+  /**
+   * Added a "add after edit" item - Megan
+   */
+  // Add row on add button click
+  $(document).on("click", ".add", function () {
+    var empty = false;
+    var input = $(this).parents("tr").find('input[type="text"]');
+    input.each(function () {
+      if (!$(this).val()) {
+        $(this).addClass("error");
+        empty = true;
+      } else {
+        $(this).removeClass("error");
+      }
+    });
+    $(this).parents("tr").find(".error").first().focus();
+    if (!empty) {
+      input.each(function () {
+        $(this).parent("td").html($(this).val());
+      });
+      $(this).parents("tr").find(".add, .edit").toggle();
+      $(".add-new").removeAttr("disabled");
+    }
+  });
+
+  // Delete row on delete button click
+  $(document).on("click", ".delete", function () {
+    $(this).parents("tr").remove();
+    $(".add-new").removeAttr("disabled");
+  });
+
+  /*****************************************************************************/
+
+  // for new users
+  if (localStorage.length === 0) {
+    localStorage.setItem("categories", JSON.stringify(DEFAULT_CATEGORIES));
+    localStorage.setItem("budget", getDefaultBudget());
+  }
+
+  renderAllItems();
+
+  // Google Charts - Megan
+  google.charts.load('current', { 'packages': ['corechart'] });
+  google.charts.setOnLoadCallback(drawChart);
+
+});
 
 
 /**
  * create and store an item into local storage
  */
 function addItem(item) {
+  console.log(item);
   const key = Date.now();
-
-  localStorage.setItem(key, JSON.stringify(item));
-}
-
-
-/**
- * Added a "add after edit" item - Megan
- */
-// Add row on add button click
-$(document).on("click", ".add", function () {
-  var empty = false;
-  var input = $(this).parents("tr").find('input[type="text"]');
-  input.each(function () {
-    if (!$(this).val()) {
-      $(this).addClass("error");
-      empty = true;
-    } else {
-      $(this).removeClass("error");
-    }
-  });
-  $(this).parents("tr").find(".error").first().focus();
-  if (!empty) {
-    input.each(function () {
-      $(this).parent("td").html($(this).val());
-    });
-    $(this).parents("tr").find(".add, .edit").toggle();
-    $(".add-new").removeAttr("disabled");
+  let transaction = new Map();
+  transaction.set(key, item);
+  if (localStorage.getItem("transactions")) {
+  let transactions = JSON.parse(localStorage.getItem('transactions'));
+  transactions.push(transaction);
+  localStorage.setItem("transactions", JSON.stringify(Object.fromEntries(transaction)));
+  } else {
+    localStorage.setItem("transactions", JSON.stringify(Object.fromEntries(transaction)));
   }
-});
+  
+}
 
 
 /**
@@ -91,13 +136,10 @@ function renderAllItems() {
   //clear the table
   tbody.innerHTML = '';
 
-  if (localStorage.length === 0) {
-    console.log('storage is empty!');
-  }
+  const transactions = JSON.parse(localStorage.getItem('transactions'));
 
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = JSON.parse(localStorage.getItem(key));
+  for (let key in transactions) {
+    const value = transactions[key];
     renderItem(key, value);
   }
 }
@@ -180,48 +222,18 @@ function renderItem(key, value) {
   tbody.append(tr);
 }
 
-
+/**
+ * 
+ * @param {*} x 
+ */
 function toggleAddEdit(x) {
   x.classList.toggle("fa-list");
 }
 
-// Edit row on edit button click
-$(document).on("click", ".edit", function () {
-  $(this).parents("tr").find("td:not(:last-child)").each(function () {
-    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
-  });
-  $(this).parents("tr").find(".add, .edit").toggle();
-  $(".add-new").attr("disabled", "disabled");
-});
-
-// Add row on add button click
-$(document).on("click", ".add", function () {
-  var empty = false;
-  var input = $(this).parents("tr").find('input[type="text"]');
-  input.each(function () {
-    if (!$(this).val()) {
-      $(this).addClass("error");
-      empty = true;
-    } else {
-      $(this).removeClass("error");
-    }
-  });
-  $(this).parents("tr").find(".error").first().focus();
-  if (!empty) {
-    input.each(function () {
-      $(this).parent("td").html($(this).val());
-    });
-    // $(this).parents("tr").find(".add, .edit").toggle();
-    // $(".add-new").removeAttr("disabled");
-  }
-});
-
-// Delete row on delete button click
-$(document).on("click", ".delete", function () {
-  $(this).parents("tr").remove();
-  $(".add-new").removeAttr("disabled");
-});
-
+/**
+ * 
+ * @returns 
+ */
 function getSpendingByCategory() {
   if (localStorage.length === 0) {
     console.log('storage is empty!');
@@ -243,12 +255,10 @@ function getSpendingByCategory() {
 }
 
 
-// Google Charts - Megan
-google.charts.load('current', { 'packages': ['corechart'] });
-google.charts.setOnLoadCallback(drawChart);
-
+/**
+ * 
+ */
 function drawChart() {
-
   var data = google.visualization.arrayToDataTable([
     ['Task', 'Hours per Day'],
     ['Mortgage', 3],
@@ -266,7 +276,3 @@ function drawChart() {
 
   chart.draw(data, options);
 }
-
-
-
-
