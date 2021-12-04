@@ -18,7 +18,7 @@ const DEFAULT_CATEGORIES = [
 
 const getDefaultBudget = () => {
   let budgetMap = new Map();
-  DEFAULT_CATEGORIES.forEach( (category) => {
+  DEFAULT_CATEGORIES.forEach((category) => {
     budgetMap.set(category, "None")
   })
   return JSON.stringify(Object.fromEntries(budgetMap));
@@ -118,14 +118,28 @@ function addItem(item) {
   const key = Date.now();
   let transaction = new Map();
   transaction.set(key, item);
-  if (localStorage.getItem("transactions")) {
-  let transactions = JSON.parse(localStorage.getItem('transactions'));
-  transactions.push(transaction);
-  localStorage.setItem("transactions", JSON.stringify(Object.fromEntries(transaction)));
+  if (localStorage.transactions) {
+    let transactions = JSON.parse(localStorage.transactions);
+    transactions.push(transaction);
+    localStorage.setItem("transactions", JSON.stringify(Object.fromEntries(transaction)));
   } else {
     localStorage.setItem("transactions", JSON.stringify(Object.fromEntries(transaction)));
   }
-  
+
+}
+
+function addCategory(category) {
+  let categories = localStorage.categories;
+  let categoryArray = JSON.parse(categories);
+  categoryArray.push(category);
+  localStorage.setItem('categories', JSON.stringify(categoryArray));
+}
+
+function addBudget(category, amount) {
+  let budgets = localStorage.budget;
+  let budgetObject = JSON.parse(budgets);
+  budgetObject[category] = amount;
+  localStorage.setItem('budget', JSON.stringify(budgetObject));
 }
 
 
@@ -136,7 +150,7 @@ function renderAllItems() {
   //clear the table
   tbody.innerHTML = '';
 
-  const transactions = JSON.parse(localStorage.getItem('transactions'));
+  const transactions = JSON.parse(localStorage.transactions);
 
   for (let key in transactions) {
     const value = transactions[key];
@@ -146,31 +160,15 @@ function renderAllItems() {
 
 
 /**
- * render items to table by specified date
- * @param {string} date "yyyy/mm/dd"
- */
-function renderItemsByDate(date) {
-  //clear the table
-  tbody.innerHTML = '';
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = JSON.parse(localStorage.getItem(key));
-    if (date == value.completed) {
-      renderItem(key, value);
-    }
-  }
-}
-
-
-/**
  * 
  * @returns [] obj
  */
-function getItemsByCategory() {
+function getItemsByCategory(category) {
   let items = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = JSON.parse(localStorage.getItem(key));
+  const transactions = JSON.parse(localStorage.getItem('transactions'));
+
+  for (let key in transactions) {
+    const value = transactions[key];
     if (category == value.category) {
       items.push({ key, value });
     }
@@ -178,24 +176,6 @@ function getItemsByCategory() {
 
   return items;
 }
-
-
-/**
- * render items to table by given category
- * @param {string} category 
- */
-function renderItemsByCategory(category) {
-  //clear the table
-  tbody.innerHTML = '';
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = JSON.parse(localStorage.getItem(key));
-    if (category == value.category) {
-      renderItem(key, value);
-    }
-  }
-}
-
 
 /**
  * render a single item and append to table
